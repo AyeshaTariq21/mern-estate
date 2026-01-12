@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, } from '../redux/user/userSlice.js';
+import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux'; 
 
 function Profile() {
@@ -173,6 +174,9 @@ const handleSubmit = async (e) => {
         <button disabled={loading} type="submit" className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
           {loading ? 'Loading...' : 'Update'}
         </button>
+        <Link className="bg-green-700 text-white rounded-lg p-3 uppercase text-center hover:opacity-95" to={"/create-listing"} >
+          Create Listing
+        </Link>
       </form>
 
       <div className="flex justify-between mt-5">
