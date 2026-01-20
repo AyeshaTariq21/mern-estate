@@ -166,7 +166,8 @@ const handleSubmit = async (e) => {
 
         <img
           onClick={() => fileRef.current.click()}
-          src={formData.avatar || currentUser.avatar}
+          src={ formData.avatar || currentUser.avatar}
+          //  || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}
           alt="profile"
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
         />
@@ -221,7 +222,7 @@ const handleSubmit = async (e) => {
 
       <p className="text-red-700 mt-5">{error? error : ""}</p>
       <p className="text-green-700 mt-5">{updateSuccess ? "User is updated successfully!" : ""}</p>
-      <button onClick={handleShowListings} className="text-green-700 w-full">Show Listings</button>
+      <button onClick={handleShowListings} className="text-green-700 w-full cursor-pointer">Show Listings</button>
       <p className='text-red-700 mt-5'>
         {showListingsError ? 'Error showing listings' : ''}
       </p>

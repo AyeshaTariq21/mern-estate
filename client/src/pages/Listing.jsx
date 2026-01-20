@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
-import { Navigation } from 'swiper/modules';
+import { Navigation } from 'swiper';
 import 'swiper/css/bundle';
 import {
   FaBath,
@@ -43,6 +43,7 @@ export default function Listing() {
       } catch (error) {
         setError(true);
         setLoading(false);
+        console.log(error);
       }
     };
     fetchListing();

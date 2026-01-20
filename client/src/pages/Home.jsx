@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation } from 'swiper';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
@@ -10,6 +10,7 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
+  const allImages = offerListings.flatMap(listing => listing.imageUrls);
   SwiperCore.use([Navigation]);
   console.log(offerListings);
   useEffect(() => {
@@ -40,11 +41,12 @@ export default function Home() {
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {
-        log(error);
+        console.log(error);
       }
     };
     fetchOfferListings();
   }, []);
+  console.log(offerListings);
   return (
     <div>
       {/* top */}
@@ -69,22 +71,17 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
-            <SwiperSlide>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: 'cover',
-                }}
-                className='h-[500px]'
-                key={listing._id}
-              ></div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
+
+
+   <Swiper navigation slidesPerView={1} className='h-[500px]'>
+    {allImages.map((url, index) => (
+      <SwiperSlide key={index}>
+        <img src={url} alt={`Slide ${index}`} className='w-full h-full object-cover' />
+      </SwiperSlide>
+    ))}
+   </Swiper>
+
+
 
       {/* listing results for offer, sale and rent */}
 
