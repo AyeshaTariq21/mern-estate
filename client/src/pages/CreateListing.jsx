@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {API} from '../utils/api.js';
+import API from '../utils/api.js';
 import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 

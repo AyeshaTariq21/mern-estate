@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth.jsx';
-import {API} from '../utils/api.js'
+import API from '../utils/api.js'
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -25,7 +25,7 @@ export default function SignUp() {
         },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
+      const data = await res.data;
       console.log(data);
       if (data.success === false) {
         setLoading(false);

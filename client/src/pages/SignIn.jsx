@@ -7,7 +7,7 @@ import {
   signInFailure,
 } from '../redux/user/userSlice';
 import OAuth from '../components/OAuth.jsx';
-import {API} from '../utils/api.js'
+import API from '../utils/api.js'
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -31,7 +31,7 @@ export default function SignIn() {
         },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
+      const data = await res.data;
       console.log(data);
       if (data.success === false) {
         dispatch(signInFailure(data.message));

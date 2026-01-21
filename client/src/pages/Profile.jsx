@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
-import {API} from '../utils/api.js'
+import API from '../utils/api.js'
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, } from '../redux/user/userSlice.js';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux'; 
@@ -73,7 +73,7 @@ const handleSubmit = async (e) => {
       },
       body: JSON.stringify(formData),
     });
-    const data = await res.json();
+    const data = await res.data;
     if(data.success === false){
       dispatch(updateUserFailure(data.message));
       return;
@@ -92,7 +92,7 @@ const handleSubmit = async (e) => {
       const res = await API(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
-      const data = await res.json();
+      const data = await res.data;
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         return;
@@ -107,14 +107,14 @@ const handleSubmit = async (e) => {
     try {
       dispatch(signOutUserStart());
       const res = await API('/api/auth/signout');
-      const data = await res.json();
+      const data = await res.data;
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         return;
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -122,7 +122,7 @@ const handleSubmit = async (e) => {
     try {
       setShowListingsError(false);
       const res = await API(`/api/user/listings/${currentUser._id}`);
-      const data = await res.json();
+      const data = await res.data;
       if (data.success === false) {
         setShowListingsError(true);
         return;
@@ -138,7 +138,7 @@ const handleSubmit = async (e) => {
       const res = await API(`/api/listing/delete/${listingId}`, {
         method: 'DELETE',
       });
-      const data = await res.json();
+      const data = await res.data;
       if (data.success === false) {
         console.log(data.message);
         return;
