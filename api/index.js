@@ -11,7 +11,7 @@ dotenv.config();
 mongoose
 .connect(process.env.MONGO, {
   serverSelectionTimeoutMS: 10000,
-});
+})
 .then(() => {
   console.log('Connected to MongoDB');
 })
