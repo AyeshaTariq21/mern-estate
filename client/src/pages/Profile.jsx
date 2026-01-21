@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
-import axios from 'axios';
+import {API} from '../utils/api.js'
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, } from '../redux/user/userSlice.js';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux'; 
@@ -33,7 +33,7 @@ function Profile() {
     data.append('file', file);
     data.append('upload_preset', 'mern-estate');
 
-    const res = await axios.post(
+    const res = await API.post(
       'https://api.cloudinary.com/v1_1/dswzycd8q/image/upload',
       data,
       {
@@ -66,7 +66,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     dispatch(updateUserStart());
-    const res = await fetch(`/api/user/update/${currentUser._id}`, {
+    const res = await API(`/api/user/update/${currentUser._id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const handleSubmit = async (e) => {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await API(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -106,7 +106,7 @@ const handleSubmit = async (e) => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await API('/api/auth/signout');
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -121,7 +121,7 @@ const handleSubmit = async (e) => {
    const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await API(`/api/user/listings/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false) {
         setShowListingsError(true);
@@ -135,7 +135,7 @@ const handleSubmit = async (e) => {
   
    const handleListingDelete = async (listingId) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
+      const res = await API(`/api/listing/delete/${listingId}`, {
         method: 'DELETE',
       });
       const data = await res.json();

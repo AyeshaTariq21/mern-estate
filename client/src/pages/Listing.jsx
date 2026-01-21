@@ -15,6 +15,7 @@ import {
   FaShare,
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
+import {API} form '../utils/api.js'
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -27,10 +28,10 @@ export default function Listing() {
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const fetchListing = async () => {
+    const APIListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/listing/get/${params.listingId}`);
+        const res = await API(`/api/listing/get/${params.listingId}`);
         const data = await res.json();
         if (data.success === false) {
           setError(true);
@@ -46,7 +47,7 @@ export default function Listing() {
         console.log(error);
       }
     };
-    fetchListing();
+    APIListing();
   }, [params.listingId]);
 
   return (

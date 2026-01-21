@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import {API} from '../utils/api.js';
 import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 
@@ -127,7 +127,7 @@ export default function CreateListing() {
         return setError('Discount price must be lower than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch('/api/listing/create', {
+      const res = await API('/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

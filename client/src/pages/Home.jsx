@@ -5,6 +5,7 @@ import { Navigation } from 'swiper';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
+import {API} from '../utils/api.js'
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -14,37 +15,37 @@ export default function Home() {
   SwiperCore.use([Navigation]);
   console.log(offerListings);
   useEffect(() => {
-    const fetchOfferListings = async () => {
+    const APIOfferListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?offer=true&limit=4');
+        const res = await API('/api/listing/get?offer=true&limit=4');
         const data = await res.json();
         setOfferListings(data);
-        fetchRentListings();
+        APIRentListings();
       } catch (error) {
         console.log(error);
       }
     };
-    const fetchRentListings = async () => {
+    const APIRentListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?type=rent&limit=4');
+        const res = await API('/api/listing/get?type=rent&limit=4');
         const data = await res.json();
         setRentListings(data);
-        fetchSaleListings();
+        APISaleListings();
       } catch (error) {
         console.log(error);
       }
     };
 
-    const fetchSaleListings = async () => {
+    const APISaleListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?type=sale&limit=4');
+        const res = await API('/api/listing/get?type=sale&limit=4');
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchOfferListings();
+    APIOfferListings();
   }, []);
   console.log(offerListings);
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import {API} from '../utils/api.js'
 import {useSelector} from 'react-redux';
 import {useNavigate, useParams } from 'react-router-dom'
 
@@ -30,9 +30,9 @@ export default function CreateListing() {
   const params = useParams();
 
  useEffect(() => {
-    const fetchListing = async () => {
+    const APIListing = async () => {
       const listingId = params.listingId;
-      const res = await fetch(`/api/listing/get/${listingId}`);
+      const res = await API(`/api/listing/get/${listingId}`);
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
@@ -41,7 +41,7 @@ export default function CreateListing() {
       setFormData(data);
     };
 
-    fetchListing();
+    APIListing();
   }, []);
 
   // 🔹 Upload Images
@@ -88,7 +88,7 @@ export default function CreateListing() {
   data.append('file', file);
   data.append('upload_preset', 'mern-estate');
 
-  const res = await axios.post(
+  const res = await API.post(
     'https://api.cloudinary.com/v1_1/dswzycd8q/image/upload',
     data,
     {
@@ -143,7 +143,7 @@ export default function CreateListing() {
         return setError('Discount price must be lower than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.listingId}`, {
+      const res = await API(`/api/listing/update/${params.listingId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
