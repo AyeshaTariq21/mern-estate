@@ -18,23 +18,23 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // ✅ CORS setup
+const app = express();
+
 const allowedOrigins = [
-  "https://mern-estate-frontend-ten.vercel.app",            // local frontend
-  "https://mern-estate-sage-sigma.vercel.app" // for future production frontend
+  "http://localhost:5173",
+  "https://mern-estate-frontend-ten.vercel.app"
 ];
 
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // server-to-server / Postman
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed"));
+      return callback(null, origin); // 🔥 IMPORTANT
     }
+    return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true // MUST if you use cookies
+  credentials: true,
 }));
-
 
 // ✅ Middleware
 app.use(express.json());
