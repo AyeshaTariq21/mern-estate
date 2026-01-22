@@ -19,7 +19,7 @@ const app = express();
 
 // ✅ CORS setup
 const allowedOrigins = [
-  "http://localhost:5173",            // local frontend
+  "https://mern-estate-frontend-ten.vercel.app",            // local frontend
   "https://mern-estate-sage-sigma.vercel.app" // for future production frontend
 ];
 
