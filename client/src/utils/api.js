@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // http://localhost:3000 or prod URL
-  withCredentials: true, // include cookies
+  baseURL: "https://mern-estate-sage-sigma.vercel.app", // your deployed backend
+  withCredentials: true, // cookies
 });
 
 export default API;
