@@ -29,3 +29,4 @@ client/node_modules/
 client/dist/
 .env
 serviceAccountKey.js
+api/.env

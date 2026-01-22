@@ -166,8 +166,7 @@ const handleSubmit = async (e) => {
 
         <img
           onClick={() => fileRef.current.click()}
-          src={ formData.avatar || currentUser.avatar}
-          //  || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}
+          src={ formData.avatar || currentUser.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}
           alt="profile"
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
         />

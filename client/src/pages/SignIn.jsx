@@ -20,29 +20,30 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch(signInStart());
-      const res = await API('/api/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.data;
-      console.log(data);
-      if (data.success === false) {
-        dispatch(signInFailure(data.message));
-        return;
-      }
-      dispatch(signInSuccess(data));
-      navigate('/');
-    } catch (error) {
-      dispatch(signInFailure(error.message));
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    dispatch(signInStart());
+    
+    // ✅ Correct Axios POST request
+    const res = await API.post('/api/auth/signin', formData); // formData automatically JSON
+    
+    const data = res.data;
+    console.log(data);
+
+    if (data.success === false) {
+      dispatch(signInFailure(data.message));
+      return;
     }
-  };
+    dispatch(signInSuccess(data));
+    navigate('/');
+  } catch (error) {
+    // Axios errors store the response in error.response
+    const errMsg = error.response?.data?.message || error.message;
+    dispatch(signInFailure(errMsg));
+  }
+};
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>

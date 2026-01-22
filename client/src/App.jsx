@@ -13,6 +13,7 @@ import Search from './pages/Search.jsx'
 import 'swiper/css';
 import 'swiper/css/navigation';
 
+
 function App() {
   return <> 
     <BrowserRouter>

@@ -16,24 +16,26 @@ export default function OAuth() {
 
       const result = await signInWithPopup(auth, provider);
 
-      // ✅ Get Firebase ID token
-      const token = await result.user.getIdToken();
+      // ✅ Using your API helper instead of fetch
+      const res = await API.post('/api/auth/google', {
+        name: result.user.displayName,
+        email: result.user.email,
+        avatar: result.user.photoURL, // changed 'photo' to 'avatar' for consistency
+      });
 
-      // ✅ Send ID token to backend
-      const res = await API.post('/api/auth/google', { token });
-
-      dispatch(signInSuccess(res.data)); // backend returns JWT + user info
+      const data = await res.data; // API helper returns axios-like response
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
-      console.log('could not sign in with google', error);
+      console.log('Could not sign in with Google', error);
     }
   };
 
   return (
     <button
       onClick={handleGoogleClick}
-      type='button'
-      className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'
+      type="button"
+      className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95"
     >
       Continue with Google
     </button>

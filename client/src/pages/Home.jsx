@@ -18,7 +18,7 @@ export default function Home() {
     const APIOfferListings = async () => {
       try {
         const res = await API('/api/listing/get?offer=true&limit=4');
-        const data = await res.data;
+        const data = res.data;
         setOfferListings(data);
         APIRentListings();
       } catch (error) {
@@ -28,7 +28,7 @@ export default function Home() {
     const APIRentListings = async () => {
       try {
         const res = await API('/api/listing/get?type=rent&limit=4');
-        const data = await res.data;
+        const data = res.data;
         setRentListings(data);
         APISaleListings();
       } catch (error) {
@@ -39,7 +39,7 @@ export default function Home() {
     const APISaleListings = async () => {
       try {
         const res = await API('/api/listing/get?type=sale&limit=4');
-        const data = await res.data;
+        const data = res.data;
         setSaleListings(data);
       } catch (error) {
         console.log(error);
