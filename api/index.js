@@ -19,23 +19,22 @@ const app = express();
 
 // ✅ CORS setup
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://mern-estate-sage-sigma.vercel.app"
+  "http://localhost:5173",            // local frontend
+  "https://mern-estate-sage-sigma.vercel.app" // for future production frontend
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (like Postman)
-    if (!origin) return callback(null, true);
-
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // server-to-server / Postman
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("CORS not allowed"));
     }
   },
-  credentials: true // THIS IS REQUIRED FOR COOKIES
+  credentials: true // MUST if you use cookies
 }));
+
 
 // ✅ Middleware
 app.use(express.json());
@@ -55,12 +54,9 @@ app.use((err, req, res, next) => {
 });
 
 // ✅ MongoDB connection
-mongoose.connect(process.env.MONGO, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected!'))
-.catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGO)
+  .then(() => console.log("MongoDB connected!"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // ✅ Start server
 const PORT = process.env.PORT || 3000;
