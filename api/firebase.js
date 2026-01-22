@@ -1,13 +1,21 @@
-// firebase.js
-import fs from "fs";
+import 'dotenv/config'; // MUST come first
 import admin from "firebase-admin";
 
-// Load your service account JSON
-const serviceAccount = JSON.parse(
-  fs.readFileSync(new URL("./serviceAccountKey.json", import.meta.url))
-);
+const requiredVars = ["FIREBASE_PROJECT_ID", "FIREBASE_CLIENT_EMAIL", "FIREBASE_PRIVATE_KEY"];
 
-// Initialize Firebase Admin SDK
+for (const v of requiredVars) {
+  if (!process.env[v]) {
+    throw new Error(`Firebase env variable ${v} not set!`);
+  }
+}
+
+const serviceAccount = {
+  type: "service_account",
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+};
+
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
